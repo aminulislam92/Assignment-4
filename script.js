@@ -15,6 +15,8 @@ let rejectCount = document.getElementById("rejectCount");
 const allFilterBtn = document.getElementById("all-filter-btn");
 const interviewFilterBtn = document.getElementById("interview-filter-btn")
 const rejectFilterBtn = document.getElementById("reject-filter-btn")
+const deleteIcon = document.getElementById("delete")
+
 
 // allCardSection.children;-> এটা array হিসাবে কাজ করছে
 // allCardSection.children.length;-> এটা array এর child সংখ্যা হিসাবে কাজ করছে
@@ -72,8 +74,8 @@ function toggleStyle(id){
 
 
 }
-
-document.querySelector("main").addEventListener("click", function(event){
+// delete button
+   mainContainer.addEventListener("click", function(event){
 
     if(event.target.closest(".delete-btn")){
 
@@ -89,9 +91,9 @@ document.querySelector("main").addEventListener("click", function(event){
 
         // Remove from reject list
         rejectList = rejectList.filter(
-            item => item.fasatName !== fastName
+            item => item.fastName !== fastName
         );
-
+        
         card.remove();
 
         calculateCount();
@@ -102,7 +104,7 @@ document.querySelector("main").addEventListener("click", function(event){
 // child element থেকে তার ইমিডিয়েট প্যারেন্ট element থেকে যাওয়ার জন্য parentNode ব্যবহার করা হয়
 // parent element থেকে যেকোন child element-এ যাওয়া জন্য target ব্যবহার করা হয়, (main থেকে তার যেকোন চাইল্ডে যাওয়া)
 mainContainer.addEventListener('click',function(event){
-    console.log(event.target.classList.contains('interview-btn'))
+    // console.log(event.target.classList.contains('interview-btn'))
 if(event.target.classList.contains('interview-btn')){
     
     // console.log(event.target.parentNode.parentNode)
@@ -139,8 +141,10 @@ rejectList = rejectList.filter(item=> item.fastName != cardInfo.fastName);
 
 if(currentStatus == "reject-filter-btn"){
     renderReject()
+
 }
 calculateCount()
+
 // console.log(interviewList)
 }
 else if(event.target.classList.contains('reject-btn')){
@@ -189,6 +193,28 @@ calculateCount()
 
 function renderInterview(){
 filterSection.innerHTML = ''
+
+  
+
+    //  যদি Interview list empty হয়
+    if(interviewList.length == 0){
+
+        filterSection.innerHTML = `
+      <div class="text-center py-20 space-y-4">
+
+               <img src="jobs.png" class="mx-auto w-20 opacity-60">
+                <h2 class="text-blue-500 font-semibold">
+                    No jobs available
+                </h2>
+                <p class="text-gray-400 text-sm">
+                    Check back soon for new job opportunities
+                </p>
+    </div>
+        `;
+
+        return;
+    }
+// 
 for(let interview of interviewList){
     // console.log(interview)
     let div = document.createElement('div');
@@ -228,6 +254,27 @@ Rejected
 }
 function renderReject(){
 filterSection.innerHTML = ''
+
+ filterSection.innerHTML = '';
+
+    if(rejectList.length == 0){
+
+        filterSection.innerHTML = `
+       <div class="text-center py-20 space-y-4">
+
+               <img src="jobs.png" class="mx-auto w-20 opacity-60">
+                <h2 class="text-blue-500 font-semibold">
+                    No jobs available
+                </h2>
+                <p class="text-gray-400 text-sm">
+                    Check back soon for new job opportunities
+                </p>
+    </div>
+        `;
+
+        return;
+    }
+
 for(let reject of rejectList){
     // console.log(interview)
     let div = document.createElement('div');
